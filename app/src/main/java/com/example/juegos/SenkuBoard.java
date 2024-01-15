@@ -30,52 +30,66 @@ public class SenkuBoard {
     public boolean isValidMove(int x, int y, int newX, int newY) {
         //si el movimiento no es valido, se devuelve false
         //un movimiento valido siempre sera en linea recta, ya sea horizontal o vertical
-
         //si las coordenadas son validas y la casilla de destino esta vacia se puede hacer el movimiento
+        System.out.println("x  " + x + "y  " + y + "newX  " + newX + "newY  " + newY);
         if (table[x][y] == 1 && table[newX][newY] == 0) {
+
             //horizontal
-            if (x != newX) {
+            if (y != newY) {
                 //movimiento derecha
-                if (x < newX) {
+                if (y < newY) {
                     //verificamos que la casilla intermedia este ocupada (table[x+1][y]==1)
                     //y x==newX-2 para que el movimiento sea de 2 casillas
-                    if (x == newX - 2 && table[x + 1][y] == 1) {
+                    if (y == newY - 2 && table[x][y+1] == 1) {
+                        table[x][y] = 0;
+                        table[x][y+1] = 0;
+                        table[newX][newY] = 1;
                         return true;
                     }
                 }
                 //movimiento izquierda
                 else {
                     //Comprobamos que la casilla intermedia este ocupada y que el movimiento sea de 2 casillas
-                    if (x == newX - 2 && table[x - 1][y] == 1) {
+                    if (y == newY + 2 && table[x][y-1] == 1) {
+                        table[x][y] = 0;
+                        table[x][y-1] = 0;
+                        table[newX][newY] = 1;
                         return true;
                     }
                 }
-                //vertical
+                //vertical0000000000000
             } else {
+
                 //movimiento abajo
-                if (y < newY) {
-                    if (y == newY - 2 && table[x][y + 1] == 1) {
+                if (x < newX) {
+                    if (x == newX - 2 && table[x+1][y] == 1) {
+                        table[x][y] = 0;
+                        table[x+1][y] = 0;
+                        table[newX][newY] = 1;
                         return true;
                     }
                 }
                 //movimiento arriba
                 else {
-                    if (y == newY - 2 && table[x][y - 1] == 1) {
+                    if (x == newX + 2 && table[x - 1][y] == 1) {
+                        table[x][y] = 0;
+                        table[x-1][y] = 0;
+                        table[newX][newY] = 1;
                         return true;
                     }
                 }
 
             }
         }
-        //si alguna de las condiciones no se cumple, se devuelve false
         return false;
     }
 
 
     public void move(int x, int y, int newX, int newY) {
+
         if (isValidMove(x, y, newX, newY)) {
-            table[x][y] = 0;
-            table[newX][newY] = 1;
+            System.out.println("Movimiento valido");
+
             //se decrementa active porque se ha movido una ficha
             active--;
         } else {
@@ -96,10 +110,12 @@ public class SenkuBoard {
         }
 
     }
-    public int[][] getTable(){
+
+    public int[][] getTable() {
         return table;
     }
-    public int getPosition(int x, int y){
+
+    public int getPosition(int x, int y) {
         return table[x][y];
     }
 }

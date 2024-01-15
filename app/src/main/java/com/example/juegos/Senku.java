@@ -1,17 +1,22 @@
 package com.example.juegos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Senku extends AppCompatActivity {
     GridLayout gridLayout;
     SenkuBoard board;
+    private int initialX = -1;
+    private int initialY = -1;
 
-    private int[] posSeleccionada={-1,-1};
+    private int[] posSeleccionada = {-1, -1};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,14 +29,39 @@ public class Senku extends AppCompatActivity {
         gridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-//                seleccionarCasilla(event.getX(),event.getY());
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    int column = getColumnFromTouch(event.getX(), gridLayout);
+                    int row = getRowFromTouch(event.getY(), gridLayout);
+                    touch(row, column);
+
+
+                }
                 return true;
             }
         });
     }
 
+
+    private void touch(int row, int column) {
+//        Log.d("Senku", "Touch: " + row + " " + column);
+        if (initialX == -1 && initialY == -1) {
+            initialX = row;
+            initialY = column;
+//            Log.d("Senku", "Touch: " + initialX + " " + initialY);
+        } else {
+//            Log.d("Senku", "TouchInitial: " + initialX + " " + initialY);
+//            Log.d("Senku", "Touch: " + row + " " + column);
+            board.move(initialX, initialY, row, column);
+            initialX = -1;
+            initialY = -1;
+        }
+        tableToView();
+    }
+
     private int getColumnFromTouch(float x, GridLayout gridLayout) {
+
         float columnWidth = gridLayout.getWidth() / gridLayout.getColumnCount();
+
         return (int) (x / columnWidth);
     }
 
@@ -40,7 +70,6 @@ public class Senku extends AppCompatActivity {
         float rowHeight = gridLayout.getHeight() / gridLayout.getRowCount();
         return (int) (y / rowHeight);
     }
-
 
 
     private void quitarAnterior() {
@@ -60,14 +89,14 @@ public class Senku extends AppCompatActivity {
         int column = getColumnFromTouch(x, gridLayout);
         int row = getRowFromTouch(y, gridLayout);
         int index = row * gridLayout.getColumnCount() + column;
-        addSeleccionable(row,column);
-        posSeleccionada[0]=row;
-        posSeleccionada[1]=column;
+        addSeleccionable(row, column);
+        posSeleccionada[0] = row;
+        posSeleccionada[1] = column;
     }
 
-    private void addSeleccionable(int row ,int column){
+    private void addSeleccionable(int row, int column) {
 
-        int index=row* gridLayout.getColumnCount() + column;
+        int index = row * gridLayout.getColumnCount() + column;
         View view = gridLayout.getChildAt(index);
 
         if (view instanceof ImageView) {
@@ -102,7 +131,6 @@ public class Senku extends AppCompatActivity {
     }
 
 
-
 //    public ImageView selectImage(){
 //        ImageView imageView = (ImageView) view;
 //        if (table[i][j] == 1) {
@@ -115,7 +143,7 @@ public class Senku extends AppCompatActivity {
 //        }
 //    }
 
-    public void tableToView(){
+    public void tableToView() {
         int index = 0;
 
         for (int i = 0; i < gridLayout.getRowCount(); i++) {
@@ -123,12 +151,11 @@ public class Senku extends AppCompatActivity {
                 View view = gridLayout.getChildAt(index);
                 if (view instanceof ImageView) {
                     ImageView imageView = (ImageView) view;
-                    if (board.getPosition(i,j) == 1) {
+                    if (board.getPosition(i, j) == 1) {
                         imageView.setImageResource(R.drawable.circulo);
-                    } else if (board.getPosition(i,j) == 0) {
+                    } else if (board.getPosition(i, j) == 0) {
                         imageView.setImageResource(R.drawable.circulovacio);
-                    }
-                    else {
+                    } else {
                         imageView.setVisibility(View.GONE);
                     }
                 }
