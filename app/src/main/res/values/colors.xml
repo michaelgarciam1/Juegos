@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tv_back">#C39F6B</color>
+    <color name="fondo_juegos">#6499B1</color>
+    <color name="fondo_botones">#6499B1</color>
+    <color name="num_0">#D3D3D3</color>    <!-- Light Gray -->
+    <color name="num_2">#FFDAB9</color>    <!-- Light Peach -->
+    <color name="num_4">#FFD700</color>    <!-- Gold -->
+    <color name="num_8">#FFA500</color>    <!-- Orange -->
+    <color name="num_16">#FF8C00</color>   <!-- Dark Orange -->
+    <color name="num_32">#FF7F50</color>   <!-- Coral -->
+    <color name="num_64">#FF6347</color>   <!-- Tomato -->
+    <color name="num_128">#FF4500</color> <!-- Orange Red -->
+    <color name="num_256">#FF8C00</color> <!-- Dark Orange -->
+    <color name="num_512">#FF7F50</color> <!-- Coral -->
+    <color name="num_1024">#FF6347</color> <!-- Tomato -->
+    <color name="num_2048">#FF4500</color> <!-- Orange Red -->
+
+
+
 </resources>

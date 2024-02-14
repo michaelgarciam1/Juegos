@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Button board2048 = findViewById(R.id.bt_2048);
         board2048.setOnClickListener(v -> {
-            Intent intent = new Intent(this, board2048.class);
+            Intent intent = new Intent(this, juego2048.class);
             startActivity(intent);
         });
 
