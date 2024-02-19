@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button senku = findViewById(R.id.bt_senku);
         senku.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Senku.class);
+            Intent intent = new Intent(this, ScoreActivity.class);
             startActivity(intent);
         });
         Button board2048 = findViewById(R.id.bt_2048);

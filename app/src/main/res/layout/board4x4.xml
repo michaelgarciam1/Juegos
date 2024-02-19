@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</LinearLayout>
+<!--<TableLayout-->
+<!--    android:id="@+id/tableLayout"-->
+<!--    android:layout_width="378dp"-->
+<!--    android:layout_height="456dp"-->
+<!--    android:layout_marginEnd="16dp"-->
+<!--    android:background="@color/fondo_juegos"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="0.803">-->
+
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text1"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text2"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text3"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text4"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+<!--    </TableRow>-->
+
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text5"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text6"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text7"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text8"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+<!--    </TableRow>-->
+
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text9"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text10"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text11"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text12"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+<!--    </TableRow>-->
+
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text13"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text14"-->
+<!--            style="@style/style_Text"-->
+
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text15"-->
+<!--            style="@style/style_Text"-->
+<!--            android:text="0" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text16"-->
+<!--            style="@style/style_Text"-->
+
+<!--            android:text="0" />-->
+<!--    </TableRow>-->
+
+
+<!--</TableLayout>-->

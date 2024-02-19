@@ -4,5 +4,6 @@
     <dimen name="image_height">55dp</dimen>
     <dimen name="cell_size">100dp</dimen>
     <dimen name="text_size">10dp</dimen>
+    <dimen name="text_size_36dp">36dp</dimen>
 </resources>
 
