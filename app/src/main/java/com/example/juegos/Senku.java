@@ -1,6 +1,7 @@
 package com.example.juegos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,7 +22,8 @@ public class Senku extends AppCompatActivity {
     Button bUndo;
     Button reset;
     SenkuBoard board;
-
+    private static final String DBTABLE = "ScoreSenku";
+    Database db;
     TextView tvScore;
     private int tiempo;
     private int initialX = -1;
@@ -29,16 +31,22 @@ public class Senku extends AppCompatActivity {
 
     private int[] posSeleccionada = {-1, -1};
     CountDownTimer timer;
+    private boolean isPlaying = true;
+    private String nameUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        Intent data = getIntent();
+        nameUser = data.getStringExtra("USERNAME");
         setContentView(R.layout.activity_senku);
         gridLayout = findViewById(R.id.gridLayout);
         bUndo = findViewById(R.id.idUndo);
         reset = findViewById(R.id.buttonReset);
         tvTime = findViewById(R.id.tvTime);
         tvScore = findViewById(R.id.tvBest);
+        db = new Database(this);
         getMaxPuntuacion();
 
         board = new SenkuBoard();
@@ -72,6 +80,7 @@ public class Senku extends AppCompatActivity {
                 if (timer != null) {
                     timer.cancel();
                 }
+                isPlaying = true;
                 board = new SenkuBoard();
                 repaintView();
                 initialX = -1;
@@ -85,7 +94,7 @@ public class Senku extends AppCompatActivity {
 
     private void showTime() {
         long tiempoInicio = System.currentTimeMillis();
-        timer=new CountDownTimer(Long.MAX_VALUE, 1000) {
+        timer = new CountDownTimer(Long.MAX_VALUE, 1000) {
             public void onTick(long millisUntilFinished) {
                 long tiempoActual = System.currentTimeMillis() - tiempoInicio;
                 tiempo = (int) tiempoActual / 1000;
@@ -100,6 +109,9 @@ public class Senku extends AppCompatActivity {
 
     private void touch(int row, int column) {
 //        Log.d("Senku", "Touch: " + row + " " + column);
+        if (!isPlaying) {
+            return;
+        }
         if (initialX == -1 && initialY == -1) {
             initialX = row;
             initialY = column;
@@ -112,7 +124,6 @@ public class Senku extends AppCompatActivity {
             initialX = -1;
             initialY = -1;
             repaintView();
-
         }
         finishGame();
     }
@@ -137,31 +148,24 @@ public class Senku extends AppCompatActivity {
             case 1:
                 // es una victoria
                 Toast.makeText(this, "Has ganado", Toast.LENGTH_SHORT).show();
-                setMaxPuntuacion();
+                saveScore();
+                isPlaying = false;
+                getMaxPuntuacion();
                 break;
             case 2:
                 // es una derrota
-                setMaxPuntuacion();
+                saveScore();
                 Toast.makeText(this, "Has perdido", Toast.LENGTH_SHORT).show();
+                isPlaying = false;
+                getMaxPuntuacion();
                 break;
         }
     }
 
-    private void quitarAnterior() {
-        if (posSeleccionada[0] != -1) {
-            int index = posSeleccionada[0] * gridLayout.getColumnCount() + posSeleccionada[1];
-            View view = gridLayout.getChildAt(index);
 
-            if (view instanceof ImageView) {
-                ImageView imageView = (ImageView) view;
-                imageView.setImageResource(R.drawable.circulo);
-            }
-        }
-    }
 
 
     private void addSeleccionable(int row, int column) {
-
         int index = row * gridLayout.getColumnCount() + column;
         View view = gridLayout.getChildAt(index);
 
@@ -196,17 +200,6 @@ public class Senku extends AppCompatActivity {
     }
 
 
-//    public ImageView selectImage(){
-//        ImageView imageView = (ImageView) view;
-//        if (table[i][j] == 1) {
-//            imageView.setImageResource(R.drawable.circulo);
-//        } else if (table[i][j] == 0) {
-//            imageView.setImageResource(R.drawable.circulovacio);
-//        }
-//        else {
-//            imageView.setVisibility(View.GONE);
-//        }
-//    }
 
     public void repaintView() {
         int index = 0;
@@ -230,35 +223,22 @@ public class Senku extends AppCompatActivity {
     }
 
     private void getMaxPuntuacion() {
+        int maxScore = db.getMaxScoreSenku(nameUser);
+        tvScore.setText("Best: " + formatedTime(maxScore));
 
-        SharedPreferences sharedPreferences = getSharedPreferences("preferenciasJuego", Context.MODE_PRIVATE);
-        int intValue = sharedPreferences.getInt("maxScoreSenku", 0);
-        tvScore.setText("Best: " + formatedTime(intValue));
     }
 
-    private void set0() {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferenciasJuego", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("maxScoreSenku", 0);
-        editor.apply();
-        tvScore.setText("Best: 00:00:00");
-    }
 
-    private void setMaxPuntuacion() {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferenciasJuego", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        int maxScore = sharedPreferences.getInt("maxScoreSenku", 0);
-        if (tiempo > maxScore) {
-            editor.putInt("maxScoreSenku", (int) tiempo);
-            editor.apply();
-            tvScore.setText("Best: " + formatedTime((int) tiempo));
-        }
-    }
 
-    private String formatedTime(int time) {
+    public String formatedTime(int time) {
         int hours = time / 3600;
         int minutes = (time % 3600) / 60;
         int seconds = time % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    private void saveScore() {
+        Database db = new Database(this);
+        db.insertScoreData(DBTABLE, nameUser, tiempo);
     }
 }

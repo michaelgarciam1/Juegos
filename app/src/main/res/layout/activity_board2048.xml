@@ -171,7 +171,7 @@
     <TextView
         android:id="@+id/tvBestScore"
         style="@style/style_Text"
-        android:layout_width="86dp"
+        android:layout_width="wrap_content"
 
         android:layout_height="43dp"
         android:layout_marginTop="53dp"

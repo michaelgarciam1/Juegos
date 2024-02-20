@@ -8,7 +8,22 @@ public class Score {
         this.name = name;
         this.score = score;
     }
-    public Score(){}
+
+    public Score() {
+    }
+
+    public void changeScoreSenku() {
+        try {
+            int score = Integer.parseInt(this.score);
+            int minutes = score / 60;
+            int seconds = score % 60;
+            this.score = minutes + "m " + seconds + "s";
+        } catch (Exception e) {
+            this.score = "0m 0s";
+        }
+
+    }
+
     public String getName() {
         return name;
     }
