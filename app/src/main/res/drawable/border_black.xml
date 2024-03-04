@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/tv_back" />
+    <stroke
+        android:width="2dp"
+         android:color="#000000" /> <!-- Color del borde negro -->
+    <corners android:radius="0dp" /> <!-- Sin esquinas redondeadas -->
+</shape>

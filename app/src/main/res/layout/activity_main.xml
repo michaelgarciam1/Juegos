@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo_juegos"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -15,22 +16,33 @@
         android:text="Juegos"
         android:textSize="96sp" />
 
-    <Button
-        android:id="@+id/bt_senku"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="senku" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/bt_2048"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="2048" />
+        <TextView
+            android:id="@+id/textViewNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Bienvenido: "
+            android:textSize="34sp" />
 
-    <Button
-        android:id="@+id/bt_scores"
-        android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="70dp"
+            android:layout_height="62dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMenu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scores" />
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"></androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

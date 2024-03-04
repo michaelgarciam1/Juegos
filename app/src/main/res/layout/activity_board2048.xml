@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo_juegos"
     tools:context=".juego2048">
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="378dp"
+        android:layout_width="match_parent"
         android:layout_height="456dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:background="@color/fondo_juegos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score2048">
 
         <TableRow
             android:layout_width="match_parent"
@@ -93,8 +92,8 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="413dp"
+            android:layout_height="116dp">
 
             <TextView
                 android:id="@+id/text13"
@@ -124,90 +123,104 @@
 
     <Button
         android:id="@+id/bt_reset"
+        style="@style/botons"
         android:layout_width="133dp"
         android:layout_height="66dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
 
-        android:backgroundTint="@color/fondo_botones"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="70dp"
         android:color="#FFA726"
-
         android:text="New Game"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/bt_undo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <Button
         android:id="@+id/bt_undo"
+        style="@style/botons"
         android:layout_width="133dp"
         android:layout_height="66dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="12dp"
 
-        android:backgroundTint="@color/fondo_botones"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="133dp"
+
         android:color="#FFA726"
-
         android:text="Undo Move"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/bt_reset"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <TextView
         android:id="@+id/tv_score2048"
         style="@style/style_Text"
         android:layout_width="86dp"
         android:layout_height="43dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="100dp"
-        android:background="#688293"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:background="#19435E"
         android:text="Score"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/tvBestScore"
+        android:textColor="#FFFEFE"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTimer" />
 
     <TextView
         android:id="@+id/tvBestScore"
         style="@style/style_Text"
-        android:layout_width="wrap_content"
+        android:layout_width="86dp"
 
         android:layout_height="43dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginBottom="100dp"
-        android:background="#7A9AA8"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
+        android:background="#193F50"
         android:text="Best"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.332"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.638" />
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/tv_score2048"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimer" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="212dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:background="#0B3345"
         android:gravity="center"
         android:text="2048"
-        android:textColor="@color/tv_back"
+        android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_reset"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTimer"
         android:layout_width="212dp"
         android:layout_height="48dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="7dp"
+        android:background="#202649"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_reset"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_score2048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/bt_back2048"
+        style="@style/botons"
+        android:layout_width="178dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="72dp"
+        android:text="back Menu"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.69"
+        app:layout_constraintStart_toEndOf="@+id/tvTimer"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.120000005" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

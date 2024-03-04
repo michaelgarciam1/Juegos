@@ -38,8 +38,9 @@ public class Senku extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent data = getIntent();
-        nameUser = data.getStringExtra("USERNAME");
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        nameUser = sharedPreferences.getString("ActiveUser", "");
+        Toast.makeText(this,nameUser,Toast.LENGTH_SHORT);
         setContentView(R.layout.activity_senku);
         gridLayout = findViewById(R.id.gridLayout);
         bUndo = findViewById(R.id.idUndo);
@@ -72,6 +73,7 @@ public class Senku extends AppCompatActivity {
                 Toast.makeText(Senku.this, "Undo", Toast.LENGTH_SHORT).show();
                 board.undo();
                 repaintView();
+
             }
         });
         reset.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +90,14 @@ public class Senku extends AppCompatActivity {
                 tiempo = 0;
                 tvTime.setText(formatedTime(tiempo));
                 showTime();
+            }
+        });
+        Button menu = findViewById(R.id.bt_backSenku);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Senku.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -6,24 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/border_background">>
 
 
     <!-- TextView for displaying the namePlayer -->
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
+        android:textStyle="bold" />
 
     <!-- TextView for displaying the score -->
     <TextView
         android:id="@+id/subTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
 </LinearLayout>

@@ -1,7 +1,10 @@
 package com.example.juegos;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Button;
@@ -31,17 +34,25 @@ public class juego2048 extends AppCompatActivity {
 
     private String nameUser;
 
+    private TextView tvTime;
+    private int tiempo;
+    CountDownTimer timer;
+    private Button btMenu;
+    int prueba = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent data = getIntent();
-        nameUser = data.getStringExtra("USERNAME");
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        nameUser = sharedPreferences.getString("ActiveUser", "");
         setContentView(R.layout.activity_board2048);
         table = findViewById(R.id.tableLayout);
         tvScore = findViewById(R.id.tv_score2048);
         tvScore.setText("0");
         tvMaxScore = findViewById(R.id.tvBestScore);
+        tvTime=findViewById(R.id.tvTimer);
+
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
         board = new board2048(4);
         db = new Database(this);
@@ -52,12 +63,35 @@ public class juego2048 extends AppCompatActivity {
             board.undoMove();
             repaintBoard();
             tvScore.setText(String.valueOf(board.getScore()));
+
         });
         btNewGame = findViewById(R.id.bt_reset);
         btNewGame.setOnClickListener(v -> {
+
            remakeGame();
         });
+        btMenu = findViewById(R.id.bt_back2048);
+        btMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(juego2048.this, MainActivity.class);
+            startActivity(intent);
+        });
+        showTime();
     }
+    private void showTime() {
+        long tiempoInicio = System.currentTimeMillis();
+        timer = new CountDownTimer(Long.MAX_VALUE, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long tiempoActual = System.currentTimeMillis() - tiempoInicio;
+                tiempo = (int) tiempoActual / 1000;
+                tvTime.setText(formatedTime(tiempo));
+            }
+
+            public void onFinish() {
+                // Manejar finalización si es necesario
+            }
+        }.start();
+    }
+
 
 
     private void repaintBoard() {
@@ -180,9 +214,20 @@ public class juego2048 extends AppCompatActivity {
     }
 
     private void remakeGame(){
+        if (timer != null) {
+            timer.cancel();
+        }
+        tvTime.setText(formatedTime(tiempo));
+        showTime();
         isOver = false;
         board = new board2048(4);
         repaintBoard();
         tvScore.setText(String.valueOf(board.getScore()));
+    }
+    public String formatedTime(int time) {
+        int hours = time / 3600;
+        int minutes = (time % 3600) / 60;
+        int seconds = time % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

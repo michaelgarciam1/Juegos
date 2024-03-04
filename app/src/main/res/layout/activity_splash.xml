@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/game"
-        android:layout_width="403dp"
-        android:layout_height="454dp"
+        android:layout_width="425dp"
+        android:layout_height="735dp"
         android:background="@drawable/background_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

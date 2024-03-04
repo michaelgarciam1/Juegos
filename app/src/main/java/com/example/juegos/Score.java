@@ -13,14 +13,10 @@ public class Score {
     }
 
     public void changeScoreSenku() {
-        try {
-            int score = Integer.parseInt(this.score);
-            int minutes = score / 60;
-            int seconds = score % 60;
-            this.score = minutes + "m " + seconds + "s";
-        } catch (Exception e) {
-            this.score = "0m 0s";
-        }
+        int seconds = Integer.parseInt(this.score);
+        int minuts = seconds / 60;
+        int remainingSeconds = seconds % 60;
+        this.score = String.format("%02d:%02d", minuts, remainingSeconds);
 
     }
 
