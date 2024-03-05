@@ -172,9 +172,11 @@ public class board2048 {
     public int isFinished() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+                //devuelve uno si es victoria
                 if (board[i][j] == 2048) {
                     return 1;
                 }
+                //devuelve dos si se puede seguir jugando
                 if (board[i][j] == 0) {
                     return 2;
                 }
@@ -186,6 +188,7 @@ public class board2048 {
                 }
             }
         }
+        //devuelve cero si es derrota
         return 0;
     }
 

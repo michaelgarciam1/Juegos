@@ -29,7 +29,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">6dp</item>
         <item name="android:textSize">24dp</item> <!-- Cambiar a un valor de tipo dimension -->
-        <item name="android:backgroundTint">#98BCCC</item>
+        <item name="android:backgroundTint">#3A1042</item>
         <item name="android:textColor">#FFFAFA</item>
         <item name="paddingStart">10dp</item>
         <item name="paddingEnd">10dp</item>

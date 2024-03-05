@@ -2,9 +2,12 @@ package com.example.juegos;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,28 +37,48 @@ public class Senku extends AppCompatActivity {
     private boolean isPlaying = true;
     private String nameUser;
 
+    private Button menu;
+
+    MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
-        nameUser = sharedPreferences.getString("ActiveUser", "");
-        Toast.makeText(this,nameUser,Toast.LENGTH_SHORT);
         setContentView(R.layout.activity_senku);
+
+        db = new Database(this);
+        nameUser = Util.getUserName(this);
+
+        initializeView();
+        setListeners();
+
+        getMaxPuntuacion();
+        board = new SenkuBoard();
+        showTime();
+        addImageViewsToGrid();
+        repaintView();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.fondo_senku);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(0.3f, 0.3f);
+        mediaPlayer.start();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+    }
+    private void initializeView() {
         gridLayout = findViewById(R.id.gridLayout);
         bUndo = findViewById(R.id.idUndo);
         reset = findViewById(R.id.buttonReset);
         tvTime = findViewById(R.id.tvTime);
         tvScore = findViewById(R.id.tvBest);
-        db = new Database(this);
-        getMaxPuntuacion();
+        menu = findViewById(R.id.bt_backSenku);
+    }
 
-        board = new SenkuBoard();
-
-        showTime();
-        addImageViewsToGrid();
-        repaintView();
-
+    private void setListeners() {
         gridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -67,39 +90,35 @@ public class Senku extends AppCompatActivity {
                 return true;
             }
         });
-        bUndo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Senku.this, "Undo", Toast.LENGTH_SHORT).show();
-                board.undo();
-                repaintView();
 
-            }
+        bUndo.setOnClickListener(View -> {
+            Toast.makeText(Senku.this, "Undo", Toast.LENGTH_SHORT).show();
+            board.undo();
+            repaintView();
         });
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (timer != null) {
-                    timer.cancel();
-                }
-                isPlaying = true;
-                board = new SenkuBoard();
-                repaintView();
-                initialX = -1;
-                initialY = -1;
-                tiempo = 0;
-                tvTime.setText(formatedTime(tiempo));
-                showTime();
+
+        reset.setOnClickListener(View -> {
+            if (timer != null) {
+                timer.cancel();
             }
+            isPlaying = true;
+            board = new SenkuBoard();
+            repaintView();
+            initialX = -1;
+            initialY = -1;
+            tiempo = 0;
+            tvTime.setText(Util.formatedTime(tiempo));
+            showTime();
         });
-        Button menu = findViewById(R.id.bt_backSenku);
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Senku.this, MainActivity.class);
-                startActivity(intent);
-            }
+
+
+        menu.setOnClickListener(View -> {
+            Intent intent = new Intent(Senku.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
+
+
     }
 
     private void showTime() {
@@ -108,7 +127,7 @@ public class Senku extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 long tiempoActual = System.currentTimeMillis() - tiempoInicio;
                 tiempo = (int) tiempoActual / 1000;
-                tvTime.setText(formatedTime(tiempo));
+                tvTime.setText(Util.formatedTime(tiempo));
             }
 
             public void onFinish() {
@@ -118,7 +137,6 @@ public class Senku extends AppCompatActivity {
     }
 
     private void touch(int row, int column) {
-//        Log.d("Senku", "Touch: " + row + " " + column);
         if (!isPlaying) {
             return;
         }
@@ -126,16 +144,38 @@ public class Senku extends AppCompatActivity {
             initialX = row;
             initialY = column;
             addSeleccionable(row, column);
-//            Log.d("Senku", "Touch: " + initialX + " " + initialY);
+
         } else {
-//            Log.d("Senku", "TouchInitial: " + initialX + " " + initialY);
-//            Log.d("Senku", "Touch: " + row + " " + column);
-            board.move(initialX, initialY, row, column);
+            boolean cambio = board.move(initialX, initialY, row, column);
+            if (!cambio) {
+                makeVibration();
+                Toast.makeText(this, "Movimiento no valido", Toast.LENGTH_SHORT).show();
+            }else{
+                sonidoMovimiento();
+            }
             initialX = -1;
             initialY = -1;
             repaintView();
         }
         finishGame();
+    }
+
+
+    private void makeVibration() {
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Versiones Oreo y superiores
+                VibrationEffect vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE);
+                vibrator.vibrate(vibrationEffect);
+                sonidoError();
+            } else {
+                // Versiones anteriores a Oreo
+                vibrator.vibrate(500);
+            }
+        }
+
     }
 
     private int getColumnFromTouch(float x, GridLayout gridLayout) {
@@ -157,22 +197,20 @@ public class Senku extends AppCompatActivity {
                 break;
             case 1:
                 // es una victoria
-                Toast.makeText(this, "Has ganado", Toast.LENGTH_SHORT).show();
+                Util.alerta("Has ganado", this);
+                sonidoVictoria();
                 saveScore();
                 isPlaying = false;
                 getMaxPuntuacion();
                 break;
             case 2:
                 // es una derrota
-                saveScore();
-                Toast.makeText(this, "Has perdido", Toast.LENGTH_SHORT).show();
+                Util.alerta("has perdido", this);
                 isPlaying = false;
-                getMaxPuntuacion();
+                sonidoLose();
                 break;
         }
     }
-
-
 
 
     private void addSeleccionable(int row, int column) {
@@ -210,7 +248,6 @@ public class Senku extends AppCompatActivity {
     }
 
 
-
     public void repaintView() {
         int index = 0;
 
@@ -234,17 +271,28 @@ public class Senku extends AppCompatActivity {
 
     private void getMaxPuntuacion() {
         int maxScore = db.getMaxScoreSenku(nameUser);
-        tvScore.setText("Best: " + formatedTime(maxScore));
+        tvScore.setText("Best: " + Util.formatedTime(maxScore));
 
     }
+    private void sonidoLose() {
 
+        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.lose);
+        mediaPlayerlocal.start();
+    }
+    private void sonidoError() {
+        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.error_senku);
+        mediaPlayerlocal.start();
+    }
 
+    private void sonidoVictoria() {
+        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.victory);
+        mediaPlayerlocal.start();
+    }
 
-    public String formatedTime(int time) {
-        int hours = time / 3600;
-        int minutes = (time % 3600) / 60;
-        int seconds = time % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    private void sonidoMovimiento(){
+        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.movement_senku);
+        mediaPlayerlocal.start();
+
     }
 
     private void saveScore() {

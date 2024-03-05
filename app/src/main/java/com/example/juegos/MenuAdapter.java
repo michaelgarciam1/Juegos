@@ -1,29 +1,36 @@
 package com.example.juegos;
+
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 /*
  * The adapter class for the RecyclerView, contains the sports data.
  */
-class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
+class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     // Member variables.
     private ArrayList<ItemMenu> mMenuData;
     private Context mContext;
+    private AppCompatActivity mActivity;
     private ImageView mMenuImage;
 
 
-    MenuAdapter(Context context, ArrayList<ItemMenu> mMenuData) {
+    MenuAdapter(Context context, ArrayList<ItemMenu> mMenuData, AppCompatActivity activity) {
         this.mMenuData = mMenuData;
         this.mContext = context;
+        this.mActivity = activity;
     }
 
     @Override
@@ -37,7 +44,7 @@ class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
     public void onBindViewHolder(MenuAdapter.ViewHolder holder,
                                  int position) {
         // Get current item.
-        ItemMenu currentItem= mMenuData.get(position);
+        ItemMenu currentItem = mMenuData.get(position);
 
         // Populate the textviews with data.
         Glide.with(mContext).load(currentItem.getImageResource()).into(mMenuImage);
@@ -51,7 +58,7 @@ class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
         return mMenuData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Member Variables for the TextViews
         private TextView mTitleText;
@@ -62,6 +69,7 @@ class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
          * @param itemView The rootview of the list_item.xml layout file.
          */
         ViewHolder(View itemView) {
+
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -70,20 +78,17 @@ class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>  {
             mMenuImage = itemView.findViewById(R.id.sportsImage);
         }
 
-        void bindTo(ItemMenu currentSport){
-
+        void bindTo(ItemMenu currentSport) {
             mTitleText.setText(currentSport.getTitle());
-
         }
-
 
         @Override
         public void onClick(View v) {
 
             ItemMenu currentItem = mMenuData.get(getAdapterPosition());
-            Intent intent = new Intent(mContext,currentItem.getActivity());
+            Intent intent = new Intent(mContext, currentItem.getActivity());
             mContext.startActivity(intent);
-
+            mActivity.finish();
         }
     }
 }
