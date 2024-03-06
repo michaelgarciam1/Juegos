@@ -22,8 +22,9 @@ El Senku es un juego donde se inicia con un tablero preestablecido con fichas di
 
 ### 2. Clases 2048
 - `Board2048`
-- `Juego2048`
 - `Direction`
+- `Juego2048`
+
 
 ### 3. Clases Senku
 - `Senku`
@@ -70,6 +71,46 @@ public static ArrayList<ItemMenu> opciones() {
    return options;
 }
 ```
+
+5. Setting
+
+Esta actividad representa los ajustes en la aplicación , en la parte de arriba puedes cambiar tu contraseña. Pones tu contraseña actual y tu nueva contraseña , y si tu contraseña actual es correcta te la deja cambiar y si la pones erronea te salta un alerta de contraseña incorrecta. 
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/c471ebc4-d1d2-413c-a807-46e243778c39)
+
+
+La parte en enmedio está la opción de cambiar la foto de perfil, esta no puede ser mayor a un 1MB. Ademas te sale al lado del boton tu foto actual, y si la cambias se actualiza. Esta foto de perfil se guarda en la database. 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/77d8ff6e-1b89-4f8c-b9cd-9eb451d06888)
+
+Y después de cambiarla 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/8a9ba23c-2f28-4169-ac46-4e0edd2b2d63)
+
+Y las opciones de abajo son Volver al menú principal que simplemente te lleva al menú principal y cerrar sesión que te lleva a gamecenter que es donde te logeas.También hay un botón de añadir datos , para tener datos ficticios guardados para hacer pruebas. 
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/b2c30f41-2b7d-407f-ade6-e4c46affab99)
+
+6. SplashActivity
+
+Esta actividad es simplemente una imagen con una animación cada vez que se inicia la aplicación 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/5800d0a6-34ff-4733-b97e-63f5b5513d42)
+
+
+## Clases 2048
+
+1. Board2048
+
+Esta clase representa la lógica del juego 2048. El tablero está representado en un array bidimensional de enteros donde van los números , y donde 0 es la representación de vacío. tenemos otro array bidimensional para guardar el estado anterior para poder deshacer un movimimento. En esta clase hacemos los movimientos , el movimiento sea en cualquier dirección , es llevar mover las piezas en ese movimiento si no hay ninguna otra pieza y poder fusionarse si la pieza de al lado es igual.
+
+En esta clase comprobamos si está la partida terminada eso es cuando hay un "2048" donde es una victoria o si no se puede hacer ningun otro movimiento. Y tenemos el método undoMove para volver al estado anterior del tablero.
+
+2. Direction
+
+Esta clase es un enumerado que representa los posibles movimientos (arriba,abajo,izquierda,derecha)
+
+3. Juego 2048
+
+Esta clase es la actividad donde se va a jugar al 2048. 
 
 
 
