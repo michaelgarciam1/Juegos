@@ -57,6 +57,20 @@ Esta actividad representa el menú principal de la aplicación. En la parte de a
 
 Esta clase es el adaptador del recyclerView para el menu. Para ello le pasamos un arrayList de ItemMenu ,que es la clase que representa las opciones de menu. He utilizado el mismo adaptador que hemos usado en clase con la diferencia que ItemMenu guarda su actividad , y al hacer click en el recyclerView va a su actividad correspondiente.
 
+4. ItemMenu
+
+ItemMenu es la representación de cada opción en el menú este está compuesto de un título, el id del imageResource y Class que es la actividad de la respectiva opcion. Esta clase tiene un método estático que devuelve todas las opciones
+```java
+public static ArrayList<ItemMenu> opciones() {
+   ArrayList<ItemMenu> options = new ArrayList<ItemMenu>();
+   options.add(new ItemMenu("2048", R.drawable.ic_2048, juego2048.class));
+   options.add(new ItemMenu("Senku", R.drawable.ic_senku, Senku.class));
+   options.add(new ItemMenu("Score", R.drawable.ic_score, ScoreActivity.class));
+   options.add(new ItemMenu("Settings", R.drawable.ic_settings, Setting.class));
+   return options;
+}
+```
+
 
 
 
