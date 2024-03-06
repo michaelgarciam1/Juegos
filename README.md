@@ -9,6 +9,41 @@ El 2048 es un juego que se basa en combinar números para alcanzar la cifra de 2
 
 El Senku es un juego donde se inicia con un tablero preestablecido con fichas dispuestas según un patrón específico, dejando una ficha central vacía. El objetivo es eliminar las fichas saltando sobre ellas en direcciones adyacentes, eliminando así las saltadas. El juego continúa hasta que no es posible realizar más movimientos, y la meta final es dejar solo una ficha en el tablero.
 
+## Resumen de clases
+
+### 1. Clases Menu
+- `Gamecenter`
+- `MainActivity`
+- `MenuAdapter`
+- `Setting`
+- `SplashActivity`
+- `ItemMenu`
+
+### 2. Clases 2048
+- `Board2048`
+- `Juego2048`
+- `Direction`
+
+### 3. Clases Senku
+- `Senku`
+- `SenkuBoard`
+
+### 4. Datos
+- `Database`
+- `Score`
+- `ScoreActivity`
+- `ScoreAdapter`
+
+### 5. Otras clases
+- `Util`
+
+
+## Clases Menu
+
+1. GameCenter
+   ![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/4101088c-e918-41a6-8ec6-aa2e75eff0a8)
+
+
 
 
 
