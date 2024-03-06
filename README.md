@@ -1,4 +1,4 @@
-### JUEGOS
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/11055d0f-e222-437b-b561-6023d75f111c)### JUEGOS
 ## Introducción
 Este documento es la documentación de la aplicación de "Juegos" , como práctica final de aplicaciones móviles. Hecha completamente en Android Studio con java en la parte de código, y XML en la parte de diseño.
 La aplicación se centra en un game center , es decir, una aplicación donde se alojan varios juegos y poder guardar en un único sitio los scores y datos de cada uno. En este gamecenter tenemos dos juegos : el 2048
@@ -27,8 +27,9 @@ El Senku es un juego donde se inicia con un tablero preestablecido con fichas di
 
 
 ### 3. Clases Senku
-- `Senku`
 - `SenkuBoard`
+- `Senku`
+  
 
 ### 4. Datos
 - `Database`
@@ -125,6 +126,70 @@ Alerta de fin de juego:
 
 
 ## Clases Senku
+
+1. SenkuBoard
+
+Esta clase representa la lógica del senkugame. Tiene un arraybidimensional que representa el tablero, este puede tener tres estados. 1 si hay una casilla ocupada,0 si está vacía y -1 las casillas ocultas. El movimiento en el senku viene determinado por dos casillas presionadas , la primera está ocupada y la segunda vacía, y ademas la de enmedio de las 2 tiene que estar ocupada, todo movimiento diferente a este es un movimiento erroneo. El juego se acaba cuando no hay más movimientos posibles, y se mira si hay casillas activas , cuando hay 1 se gana y si hay más es que has perdido. Tenemos una función de undo que devuelve el tablero a un estado anterior.
+
+2. Senku
+
+Esta clase es donde se va a jugar al senku, para ello necesitamos una instancia del senku board y para representarlo graficamente se usa un gridLayout donde en cada posicion va un círculo azul si esta ocupada o un círculo blanco si está vacia, cuando se elige una casilla se pone amarilla para identificar cual has presionado y despues de elegir la segunda casilla se quita, y se repinta el tablero. En cada movimiento, si es un movimiento erroneo, vibra el dispositivo y crea un toast para indicarlo. Y se mira si ha acabado el juego , si ganas te guarda la puntuación en la base de datos, el tiempo que tardas en acabar, y si pierdes no te guarda la puntuación. Ganes o pierdas te sale una alerta y un sonido para decirte que acaba el juego.
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/ad187a6c-05dc-4f05-8cdb-3f78de2f2aeb) 
+
+Alerta de fin de juego:
+
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/f1bcc8a3-7e40-457b-aa7e-af9bb097e078)
+
+## Clases Datos
+
+1. Database
+
+Esta clase representa la base de datos de la aplicación.Tenemos 3 tablas , Users que tiene un name,password y photo ; que son los datos de los usuarios registrados en la aplicación. Score2048 y scoreSenku son las tablas donde se guardan las puntuaciones de los usuarios , que tiene el nombre del usuario y la puntuación que ha hecho.
+
+   ```java
+    @Override
+    public void onCreate(SQLiteDatabase DB) {
+        DB.execSQL("create Table Score2048(name TEXT, score INT)");
+        DB.execSQL("create Table ScoreSenku(name TEXT, score INT)");
+        DB.execSQL("create Table Users(name TEXT, password TEXT,photo BLOB)");
+    }
+   ````
+   
+Ademas de crear las tablas tenemos los inserts para cada usuario o puntuación. El update para cambiar la foto o la contraseña del usuario y los selects para ver los datos.
+
+2. Score
+
+Esta clase representa una puntuación con un String para el nombre y un int para la puntuación en si. Destacar que en el senku se guarda el tiempo , los segundos, por ello en esta clase hay un convertidor de un int de segundos a un string de tiempo
+
+3. ScoreActivity
+
+Esta actividad vemos los registros guardados de las puntuaciones para ellos tenemos 2 recyclersview ,uno para cada juego. Tenemos 2 chechboxes si queremos ver las puntuaciones de todos los usuarios y otro checkbox para ver las puntuaciones ordenadas. Un boton para aplicar los cambios de la chechbox, un botón para resetear todos los datos. y un botón para volver al menú
+
+Solo tus puntuaciones:
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/d29a1dae-54d8-49dc-a0a0-d46fbd4428d6)
+
+Todas las puntuaciones: 
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/87bd2f91-f055-43b3-9071-d559f8caff8b)
+
+Y las puntuaciones ordenadas:
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/3082b320-3a1c-4e6f-958b-b940873e4a9b)
+
+4. ScoreAdapter
+
+Esta clase es el adaptador del recyclerView para los scores de cada juego , para ello necesitamos un arraylist de un juego. y Se mostrará una lista de los scores.
+
+## Otras clases 
+
+1. Util
+
+Clase creada para poner todos los métodos que se utilizan en mas de una clase y no tener código repetido. Como las alertas donde se crea un AlertDialog con el mensaje que le pasas. Getusername , devuelve el usuario actual guardado en sharedPreference , y un formatedTime para cambiar los segundos a un string con formato 00:00
+
+
+
+
+
 
 
 
