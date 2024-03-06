@@ -25,7 +25,7 @@ public class GameCenter extends AppCompatActivity {
         db = new Database(this);
         initializeView();
         setListeners();
-        mediaPlayer=MediaPlayer.create(this,R.raw.fondo_menu);
+        mediaPlayer = MediaPlayer.create(this, R.raw.fondo_menu);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
@@ -37,7 +37,6 @@ public class GameCenter extends AppCompatActivity {
     }
 
 
-
     private void initializeView() {
         user = findViewById(R.id.etName);
         password = findViewById(R.id.etPassword);
@@ -45,7 +44,7 @@ public class GameCenter extends AppCompatActivity {
         register = findViewById(R.id.bt_new_user);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         login.setOnClickListener(v -> {
 
             String name = user.getText().toString();
@@ -64,10 +63,15 @@ public class GameCenter extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Util.alerta("Usuario o contraseña incorrectos", this);
+                    if (db.existUser(name)) {
+                        Util.alerta("Contraseña incorrecta", this);
+                    } else {
+                        Util.alerta("Usuario no registrado", this);
+                    }
                 }
             }
         });
+
 
         register.setOnClickListener(v -> {
             String name = user.getText().toString();

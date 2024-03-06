@@ -40,5 +40,7 @@ public class Util {
         return context.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
                 .getString("ActiveUser", "");
     }
+
+
 }
 

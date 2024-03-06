@@ -40,7 +40,9 @@ public class juego2048 extends AppCompatActivity {
     int prueba = 0;
 
     private MediaPlayer mediaPlayer;
-
+    private MediaPlayer mediaPlayerVictoria;
+    private MediaPlayer mediaPlayerDerrota;
+    private MediaPlayer mediaPlayerMovimiento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +54,22 @@ public class juego2048 extends AppCompatActivity {
 
         initializeView();
         setListeners();
-
+        initSound();
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
 
         board = new board2048(4);
         repaintBoard();
         getMaxPuntuacion();
         showTime();
-        mediaPlayer=MediaPlayer.create(this, R.raw.fondo2048);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(0.3f, 0.3f);
-        mediaPlayer.start();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
+        mediaPlayer.release();
+
     }
 
     private void initializeView() {
@@ -100,6 +101,16 @@ public class juego2048 extends AppCompatActivity {
 
     }
 
+    private void initSound() {
+        mediaPlayer = MediaPlayer.create(this, R.raw.fondo2048);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(0.3f, 0.3f);
+        mediaPlayer.start();
+        mediaPlayerMovimiento = MediaPlayer.create(this, R.raw.deslizar2048);
+        mediaPlayerDerrota = MediaPlayer.create(this, R.raw.lose);
+        mediaPlayerVictoria = MediaPlayer.create(this, R.raw.victory);
+    }
+
     private void showTime() {
         long tiempoInicio = System.currentTimeMillis();
         timer = new CountDownTimer(Long.MAX_VALUE, 1000) {
@@ -129,8 +140,6 @@ public class juego2048 extends AppCompatActivity {
     }
 
 
-
-
     private void move(Direction direction) {
         if (isOver) {
             return;
@@ -141,19 +150,18 @@ public class juego2048 extends AppCompatActivity {
         tvScore.setText(String.valueOf(board.getScore()));
         if (board.isFinished() == 1 || board.isFinished() == 0) {
             setMaxPuntuacion();
-            String message="";
-           if(board.isFinished() == 1) {
-               sonidoVictoria();
-               message = "You win!";
-           }else{
+            String message = "";
+            if (board.isFinished() == 1) {
+                sonidoVictoria();
+                message = "You win!";
+            } else {
                 message = "Game over!";
                 sonidoDerrota();
-           }
+            }
             alertGameOver(message);
             isOver = true;
         }
     }
-
 
 
     private void alertGameOver(String message) {
@@ -261,18 +269,18 @@ public class juego2048 extends AppCompatActivity {
     }
 
     private void sonidoVictoria() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.victory);
-        mediaPlayer.start();
+
+        mediaPlayerVictoria.start();
     }
 
     private void sonidoDerrota() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.lose);
-        mediaPlayer.start();
+
+        mediaPlayerDerrota.start();
     }
 
-    private void sonidoMovimiento(){
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.deslizar2048);
-        mediaPlayer.start();
+    private void sonidoMovimiento() {
+
+        mediaPlayerMovimiento.start();
     }
 
 

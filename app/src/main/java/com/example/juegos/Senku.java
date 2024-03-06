@@ -39,7 +39,11 @@ public class Senku extends AppCompatActivity {
 
     private Button menu;
 
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayerLose;
+    private MediaPlayer mediaPlayerMovimiento;
+    private MediaPlayer mediaPlayerVictoria;
+    private MediaPlayer mediaPlayerError;
 
 
     @Override
@@ -52,6 +56,7 @@ public class Senku extends AppCompatActivity {
 
         initializeView();
         setListeners();
+        initSound();
 
         getMaxPuntuacion();
         board = new SenkuBoard();
@@ -59,16 +64,15 @@ public class Senku extends AppCompatActivity {
         addImageViewsToGrid();
         repaintView();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.fondo_senku);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(0.3f, 0.3f);
-        mediaPlayer.start();
+
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
     }
+
     private void initializeView() {
         gridLayout = findViewById(R.id.gridLayout);
         bUndo = findViewById(R.id.idUndo);
@@ -121,6 +125,17 @@ public class Senku extends AppCompatActivity {
 
     }
 
+    private void initSound() {
+        mediaPlayer = MediaPlayer.create(this, R.raw.fondo_senku);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(0.3f, 0.3f);
+        mediaPlayer.start();
+        mediaPlayerLose = MediaPlayer.create(this, R.raw.lose);
+        mediaPlayerMovimiento = MediaPlayer.create(this, R.raw.movement_senku);
+        mediaPlayerVictoria = MediaPlayer.create(this, R.raw.victory);
+        mediaPlayerError = MediaPlayer.create(this, R.raw.error_senku);
+    }
+
     private void showTime() {
         long tiempoInicio = System.currentTimeMillis();
         timer = new CountDownTimer(Long.MAX_VALUE, 1000) {
@@ -131,7 +146,6 @@ public class Senku extends AppCompatActivity {
             }
 
             public void onFinish() {
-                // Manejar finalización si es necesario
             }
         }.start();
     }
@@ -150,7 +164,7 @@ public class Senku extends AppCompatActivity {
             if (!cambio) {
                 makeVibration();
                 Toast.makeText(this, "Movimiento no valido", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 sonidoMovimiento();
             }
             initialX = -1;
@@ -197,7 +211,7 @@ public class Senku extends AppCompatActivity {
                 break;
             case 1:
                 // es una victoria
-                Util.alerta("Has ganado", this);
+                Util.alerta("HAS GANADO :)", this);
                 sonidoVictoria();
                 saveScore();
                 isPlaying = false;
@@ -205,7 +219,7 @@ public class Senku extends AppCompatActivity {
                 break;
             case 2:
                 // es una derrota
-                Util.alerta("has perdido", this);
+                Util.alerta("HAS PERDIDO :(", this);
                 isPlaying = false;
                 sonidoLose();
                 break;
@@ -272,27 +286,22 @@ public class Senku extends AppCompatActivity {
     private void getMaxPuntuacion() {
         int maxScore = db.getMaxScoreSenku(nameUser);
         tvScore.setText("Best: " + Util.formatedTime(maxScore));
-
     }
+
     private void sonidoLose() {
-
-        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.lose);
-        mediaPlayerlocal.start();
+        mediaPlayerLose.start();
     }
+
     private void sonidoError() {
-        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.error_senku);
-        mediaPlayerlocal.start();
+        mediaPlayerError.start();
     }
 
     private void sonidoVictoria() {
-        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.victory);
-        mediaPlayerlocal.start();
+        mediaPlayerVictoria.start();
     }
 
-    private void sonidoMovimiento(){
-        MediaPlayer mediaPlayerlocal = MediaPlayer.create(this, R.raw.movement_senku);
-        mediaPlayerlocal.start();
-
+    private void sonidoMovimiento() {
+        mediaPlayerMovimiento.start();
     }
 
     private void saveScore() {

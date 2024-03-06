@@ -18,7 +18,6 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-
         DB.execSQL("create Table Score2048(name TEXT, score INT)");
         DB.execSQL("create Table ScoreSenku(name TEXT, score INT)");
         DB.execSQL("create Table Users(name TEXT, password TEXT,photo BLOB)");
@@ -55,7 +54,7 @@ public class Database extends SQLiteOpenHelper {
 
     public boolean checkUser(String name, String password) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from Users where name = ? and password = ?", new String[]{name, password});
+        Cursor cursor = DB.rawQuery("Select name from Users where name = ? and password = ?", new String[]{name, password});
         if (cursor.getCount() > 0) {
             return true;
         } else {
@@ -94,7 +93,7 @@ public class Database extends SQLiteOpenHelper {
     }
     public boolean existUser(String name) {
            SQLiteDatabase DB = this.getWritableDatabase();
-            Cursor cursor = DB.rawQuery("Select * from Users where name = ?", new String[]{name});
+            Cursor cursor = DB.rawQuery("Select name from Users where name = ?", new String[]{name});
             System.out.println(cursor.getCount());
             if (cursor.getCount() > 0) {
                 return true;

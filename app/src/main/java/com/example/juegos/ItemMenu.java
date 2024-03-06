@@ -33,7 +33,6 @@ public class ItemMenu {
             options.add(new ItemMenu("Senku", R.drawable.ic_senku,Senku.class));
             options.add(new ItemMenu("Score", R.drawable.ic_score,ScoreActivity.class));
             options.add(new ItemMenu("Settings", R.drawable.ic_settings,Setting.class));
-
             return options;
     }
     }
