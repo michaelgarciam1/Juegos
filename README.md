@@ -1,4 +1,4 @@
-![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/11055d0f-e222-437b-b561-6023d75f111c)### JUEGOS
+### JUEGOS
 ## Introducción
 Este documento es la documentación de la aplicación de "Juegos" , como práctica final de aplicaciones móviles. Hecha completamente en Android Studio con java en la parte de código, y XML en la parte de diseño.
 La aplicación se centra en un game center , es decir, una aplicación donde se alojan varios juegos y poder guardar en un único sitio los scores y datos de cada uno. En este gamecenter tenemos dos juegos : el 2048
@@ -165,16 +165,25 @@ Esta clase representa una puntuación con un String para el nombre y un int para
 
 3. ScoreActivity
 
-Esta actividad vemos los registros guardados de las puntuaciones para ellos tenemos 2 recyclersview ,uno para cada juego. Tenemos 2 chechboxes si queremos ver las puntuaciones de todos los usuarios y otro checkbox para ver las puntuaciones ordenadas. Un boton para aplicar los cambios de la chechbox, un botón para resetear todos los datos. y un botón para volver al menú
+Esta actividad vemos los registros guardados de las puntuaciones para ellos tenemos 2 recyclersview ,uno para cada juego. Tenemos 2 chechboxes si queremos ver las puntuaciones de todos los usuarios y otro checkbox para ver las puntuaciones ordenadas. Un boton para aplicar los cambios de la chechbox, un botón para resetear todos los datos. y un botón para volver al menú 
 
-Solo tus puntuaciones:
-![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/d29a1dae-54d8-49dc-a0a0-d46fbd4428d6)
 
-Todas las puntuaciones: 
-![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/87bd2f91-f055-43b3-9071-d559f8caff8b)
 
-Y las puntuaciones ordenadas:
-![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/3082b320-3a1c-4e6f-958b-b940873e4a9b)
+Solo tus puntuaciones: 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/d29a1dae-54d8-49dc-a0a0-d46fbd4428d6) 
+
+
+Todas las puntuaciones:  
+ 
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/87bd2f91-f055-43b3-9071-d559f8caff8b) 
+
+
+
+Y las puntuaciones ordenadas: 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/3082b320-3a1c-4e6f-958b-b940873e4a9b) 
+
 
 4. ScoreAdapter
 
