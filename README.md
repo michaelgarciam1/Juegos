@@ -118,6 +118,15 @@ En la parte de abajo tenemos un botón de hacer una partida nueva, que reinicia 
 
 ![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/1020f9ed-d6e3-4dd8-a6c6-53d8e760175f)
 
+Alerta de fin de juego: 
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/fddc130c-dbfa-4ad8-9bb0-b9bef2f5b212)
+
+
+
+## Clases Senku
+
+
 
 
 
