@@ -15,9 +15,10 @@ El Senku es un juego donde se inicia con un tablero preestablecido con fichas di
 - `Gamecenter`
 - `MainActivity`
 - `MenuAdapter`
+- `ItemMenu`
 - `Setting`
 - `SplashActivity`
-- `ItemMenu`
+
 
 ### 2. Clases 2048
 - `Board2048`
@@ -41,7 +42,25 @@ El Senku es un juego donde se inicia con un tablero preestablecido con fichas di
 ## Clases Menu
 
 1. GameCenter
-   ![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/4101088c-e918-41a6-8ec6-aa2e75eff0a8)
+
+Esta clase es una actividad que representa el login en la aplicación. Cuenta de dos entradas de texto , la cual una es el Username del usuario y el otro es la contraseña. Y de dos botones , "Login" para entrar y "Crear Usuario" para crear un usuario. Los Usernames y las contraseñas de los usuarios se guardan en la database interna y es por ello que el username debe ser único. Esto se demuestra al darle al boton de crear usuario te sale una alerta por si intentas crear un usuario con el mismo nombre. Para el login, se comprueban los campos correspondientes y se mira en la database si está registrado, si lo está te lleva al menú principal y si no te sale una alerta de usuario no registrado. Esta actividad cuenta con música de fondo.
+   
+   ![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/4101088c-e918-41a6-8ec6-aa2e75eff0a8) 
+
+2. MainActivity
+
+Esta actividad representa el menú principal de la aplicación. En la parte de arriba te muestra el usuario que ha iniciado sesión y tu foto de perfil, te pone una por defecto, y abajo te muestra un recyclerView que hace como las diferentes opciones que hay en la aplicación, que en este caso cuenta con 4 opciones: 2048,Senku,Score,Settings. Y esta actividad cuenta con música de fondo.
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/8352689d-51c4-4f0e-91fd-4f6cc26a5d63)
+
+3. MenuAdapter
+
+Esta clase es el adaptador del recyclerView para el menu. Para ello le pasamos un arrayList de ItemMenu ,que es la clase que representa las opciones de menu. He utilizado el mismo adaptador que hemos usado en clase con la diferencia que ItemMenu guarda su actividad , y al hacer click en el recyclerView va a su actividad correspondiente.
+
+
+
+
+   
 
 
 
