@@ -110,7 +110,14 @@ Esta clase es un enumerado que representa los posibles movimientos (arriba,abajo
 
 3. Juego 2048
 
-Esta clase es la actividad donde se va a jugar al 2048. 
+Esta clase es la actividad donde se va a jugar al 2048. Se crea una instancia del board2048 y un tableLayout 4x4 definido en el XML, y para cada casilla del board2048  se representa en cada su casilla del tablelayout. Para poder jugar necesitamos poder deslizar hacia un lado y hacer un movimiento en el juego ,eso se consigue con la clase "EscucharGestos"  donde vemos que gesto hace y llamamos a la función move, en esta vemos si el juego ya había terminado no hacemos nada, si el juego no ha terminado hacemos un sonido de movimiento, llamamos a que se mueva el board2048 y repintamos el tableLayout, despúes de hacer el movimiento vemos si ahora ha terminado y aqui si ha terminado lanzamos un sonido y una alerta para notificar que el juego ha terminado. Cada vez que se termina el juego se guarda la puntuación en la database, ganes o pierdas
+
+En esta clase a parte del juego en sí en la parte superior tenemos el tiempo de juego de cada partida, tu puntuación actual y la puntuación máxima que has obtenido guardad en la base de datos. Y un botón de ir al menú principal.
+
+En la parte de abajo tenemos un botón de hacer una partida nueva, que reinicia el boars2048,el timer y tu puntuación actual; y otro botón de Undo move que devuelve a un estado anterior
+
+![image](https://github.com/michaelgarciam1/Juegos/assets/114613053/1020f9ed-d6e3-4dd8-a6c6-53d8e760175f)
+
 
 
 
